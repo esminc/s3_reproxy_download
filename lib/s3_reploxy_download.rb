@@ -1,5 +1,30 @@
-require "s3_reploxy_download/version"
+require 's3_reploxy_download/version'
+require 'action_controller'
+require 'aws-sdk'
 
 module S3ReploxyDownload
-  # Your code goes here...
+  def send_s3_file(bucket_name, path)
+    s3_object = S3Object.new(bucket_name, path)
+
+    response.headers['X-Accel-Redirect'] = '/reploxy'
+    response.headers['X-Reproxy-URL'] = s3_object.presigned_url
+    response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.filename}\""
+
+    head :ok
+  end
+
+  class S3Object
+    def initialize(bucket_name, path)
+      @bucket  = Aws::S3::Resource.new.bucket(bucket_name)
+      @path    = path
+    end
+
+    def presigned_url
+      @bucket.object(@path).presigned_url(:get, @path)
+    end
+
+    def filename
+      File.basename(@path)
+    end
+  end
 end
