@@ -3,12 +3,13 @@ require 'action_controller'
 require 'aws-sdk'
 
 module S3ReploxyDownload
-  def send_s3_file(bucket_name, path)
+  def send_s3_file(bucket_name, path, options = {})
     s3_object = S3Object.new(bucket_name, path)
 
     response.headers['X-Accel-Redirect'] = '/reploxy'
     response.headers['X-Reproxy-URL'] = s3_object.presigned_url
     response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.filename}\""
+    response.headers['Content-Type'] = options[:content_type] if options[:content_type]
 
     head :ok
   end
