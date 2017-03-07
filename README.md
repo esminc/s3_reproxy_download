@@ -1,8 +1,6 @@
 # S3ReploxyDownload
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/s3_reploxy_download`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Provide helper method that S3 file downloade use X-REPROXY-URL
 
 ## Installation
 
@@ -22,7 +20,37 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First, include `S3ReploxyDownload` module to your controller.
+
+```ruby
+  class YourController
+    include S3ReploxyDownload
+  end
+```
+
+Call `send_s3_file` method.
+
+```ruby
+  class YourController
+    include S3ReploxyDownload
+
+    def show
+      send_s3_file :your_bucket, :file_key
+    end
+  end
+```
+
+If you want to set custom headers, you should use `headers` option.
+
+```ruby
+  class YourController
+    include S3ReploxyDownload
+
+    def show
+      send_s3_file :your_bucket, :file_key, headers: {'X-CUSTOM-HEADER' => 'custom'}
+    end
+  end
+```
 
 ## Development
 
@@ -32,5 +60,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/s3_reploxy_download.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/esminc/s3_reploxy_download.
