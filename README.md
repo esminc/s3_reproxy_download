@@ -1,4 +1,4 @@
-# S3ReploxyDownload
+# S3ReproxyDownload
 
 Provide helper method that S3 file downloade use X-REPROXY-URL
 
@@ -7,7 +7,7 @@ Provide helper method that S3 file downloade use X-REPROXY-URL
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 's3_reploxy_download'
+gem 's3_reproxy_download'
 ```
 
 And then execute:
@@ -16,15 +16,15 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install s3_reploxy_download
+    $ gem install s3_reproxy_download
 
 ## Usage
 
-First, include `S3ReploxyDownload` module to your controller.
+First, include `S3ReproxyDownload` module to your controller.
 
 ```ruby
   class YourController
-    include S3ReploxyDownload
+    include S3ReproxyDownload
   end
 ```
 
@@ -32,7 +32,7 @@ Call `send_s3_file` method.
 
 ```ruby
   class YourController
-    include S3ReploxyDownload
+    include S3ReproxyDownload
 
     def show
       send_s3_file :your_bucket, :file_key
@@ -44,7 +44,7 @@ If you want to set custom headers, you should use `headers` option.
 
 ```ruby
   class YourController
-    include S3ReploxyDownload
+    include S3ReproxyDownload
 
     def show
       send_s3_file :your_bucket, :file_key, headers: {'X-CUSTOM-HEADER' => 'custom'}
@@ -60,4 +60,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/esminc/s3_reploxy_download.
+Bug reports and pull requests are welcome on GitHub at https://github.com/esminc/s3_reproxy_download.

@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 's3_reploxy_download/version'
+require 's3_reproxy_download/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "s3_reploxy_download"
-  spec.version       = S3ReploxyDownload::VERSION
+  spec.name          = "s3_reproxy_download"
+  spec.version       = S3ReproxyDownload::VERSION
   spec.authors       = ["takkanm", "hide_nba", "hrysd"]
   spec.email         = ["takkanm@gmail.com"]
 
   spec.summary       = %q{provide helper method that S3 file downloade use X-REPROXY-URL}
   spec.description   = %q{provide helper method that S3 file downloade use X-REPROXY-URL}
-  spec.homepage      = "https://github.com/esminc/s3_reploxy_download"
+  spec.homepage      = "https://github.com/esminc/s3_reproxy_download"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})

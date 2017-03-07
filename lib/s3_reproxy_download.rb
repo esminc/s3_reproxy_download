@@ -1,12 +1,12 @@
-require 's3_reploxy_download/version'
+require 's3_reproxy_download/version'
 require 'action_controller'
 require 'aws-sdk'
 
-module S3ReploxyDownload
+module S3ReproxyDownload
   def send_s3_file(bucket_name, path, headers: {})
     s3_object = S3Object.new(bucket_name, path)
 
-    response.headers['X-Accel-Redirect'] = '/reploxy'
+    response.headers['X-Accel-Redirect'] = '/reproxy'
     response.headers['X-Reproxy-URL'] = s3_object.presigned_url
     response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.filename}\""
 
