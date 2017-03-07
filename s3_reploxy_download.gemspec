@@ -6,21 +6,12 @@ require 's3_reploxy_download/version'
 Gem::Specification.new do |spec|
   spec.name          = "s3_reploxy_download"
   spec.version       = S3ReploxyDownload::VERSION
-  spec.authors       = ["takkanm"]
+  spec.authors       = ["takkanm", "hide_nba", "hrysd"]
   spec.email         = ["takkanm@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
+  spec.summary       = %q{provide helper method that S3 file downloade use X-REPROXY-URL}
+  spec.description   = %q{provide helper method that S3 file downloade use X-REPROXY-URL}
+  spec.homepage      = "https://github.com/esminc/s3_reploxy_download"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
