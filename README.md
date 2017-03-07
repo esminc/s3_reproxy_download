@@ -20,11 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-First, include `S3ReproxyDownload` module to your controller.
+First, include `S3ReproxyDownload::Helper` module to your controller.
 
 ```ruby
   class YourController
-    include S3ReproxyDownload
+    include S3ReproxyDownload::Helper
   end
 ```
 

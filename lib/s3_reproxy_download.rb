@@ -3,18 +3,20 @@ require 'action_controller'
 require 'aws-sdk'
 
 module S3ReproxyDownload
-  def send_s3_file(bucket_name, path, headers: {})
-    s3_object = S3Object.new(bucket_name, path)
+  module Helper
+    def send_s3_file(bucket_name, path, headers: {})
+      s3_object = S3ReproxyDownload::S3Object.new(bucket_name, path)
 
-    response.headers['X-Accel-Redirect'] = '/reproxy'
-    response.headers['X-Reproxy-URL'] = s3_object.presigned_url
-    response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.filename}\""
+      response.headers['X-Accel-Redirect'] = '/reproxy'
+      response.headers['X-Reproxy-URL'] = s3_object.presigned_url
+      response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.filename}\""
 
-    headers.each do |header, value|
-      response.headers[header] = value
+      headers.each do |header, value|
+        response.headers[header] = value
+      end
+
+      head :ok
     end
-
-    head :ok
   end
 
   class S3Object
