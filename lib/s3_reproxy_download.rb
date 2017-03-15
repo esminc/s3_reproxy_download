@@ -34,7 +34,7 @@ module S3ReproxyDownload
     end
 
     def presigned_url
-      @bucket.object(@path).presigned_url(:get, @path)
+      @bucket.object(@path).presigned_url(:get)
     end
 
     def filename
