@@ -1,14 +1,21 @@
 require 's3_reproxy_download/version'
 require 'action_controller'
+require 'active_support/configurable'
 require 'aws-sdk'
 
 module S3ReproxyDownload
-  def self.reproxy_path=(path)
-    @reproxy_path = path
+  include ActiveSupport::Configurable
+
+  config_accessor :reproxy_path, instance_reader: false, instance_writer: false do
+    '/reproxy'
   end
 
-  def self.reproxy_path
-    @reproxy_path || '/reproxy'
+  config_accessor :aws_access_key_id, instance_reader: false, instance_writer: false do
+    ENV['AWS_ACCESS_KEY']
+  end
+
+  config_accessor :aws_secret_access_key, instance_reader: false, instance_writer: false do
+    ENV['AWS_SECRET_ACCESS_KEY']
   end
 
   module Helper
@@ -29,7 +36,7 @@ module S3ReproxyDownload
 
   class S3Object
     def initialize(bucket_name, path)
-      @bucket  = Aws::S3::Resource.new.bucket(bucket_name)
+      @bucket  = Aws::S3::Resource.new(client: client).bucket(bucket_name)
       @path    = path
     end
 
@@ -39,6 +46,15 @@ module S3ReproxyDownload
 
     def filename
       File.basename(@path)
+    end
+
+    private
+
+    def client
+      @client ||= Aws::S3::Client.new(
+        access_key_id:     S3ReproxyDownload.aws_access_key_id,
+        secret_access_key: S3ReproxyDownload.aws_secret_access_key
+      )
     end
   end
 end
