@@ -1,10 +1,13 @@
 require 's3_reproxy_download/version'
 require 'action_controller'
+require 'active_support/configurable'
 require 'aws-sdk'
 
 module S3ReproxyDownload
-  def self.reproxy_path=(path)
-    @reproxy_path = path
+  include ActiveSupport::Configurable
+
+  config_accessor :reproxy_path, instance_reader: false, instance_writer: false do
+    '/reproxy'
   end
 
   def self.reproxy_path
