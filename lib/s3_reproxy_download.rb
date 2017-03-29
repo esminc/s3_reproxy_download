@@ -24,7 +24,7 @@ module S3ReproxyDownload
 
       response.headers['X-Accel-Redirect'] = S3ReproxyDownload.reproxy_path
       response.headers['X-Reproxy-URL'] = s3_object.presigned_url
-      response.headers['Content-Disposition'] = "attachment; filename=\"#{CGI.escape(s3_object.filename)}\""
+      response.headers['Content-Disposition'] = "attachment; filename=\"#{s3_object.escaped_filename}\"; filename*=UTF-8''#{s3_object.escaped_filename}"
 
       headers.each do |header, value|
         response.headers[header] = value
@@ -46,6 +46,10 @@ module S3ReproxyDownload
 
     def filename
       File.basename(@path)
+    end
+
+    def escaped_filename
+      CGI.escape(filename)
     end
 
     private
