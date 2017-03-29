@@ -10,12 +10,17 @@ module S3ReproxyDownload
     '/reproxy'
   end
 
-  config_accessor :aws_access_key_id, instance_reader: false, instance_writer: false do
-    ENV['AWS_ACCESS_KEY']
+  config_accessor :s3_client_options, instance_reader: false, instance_writer: false do
+    {
+      access_key_id:     ENV['AWS_ACCESS_KEY'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+    }
   end
 
-  config_accessor :aws_secret_access_key, instance_reader: false, instance_writer: false do
-    ENV['AWS_SECRET_ACCESS_KEY']
+  # for Backward compatible
+  %w(access_key_id secret_access_key).each do |key|
+    define_singleton_method "aws_#{key}".to_sym,  -> { s3_client_options[key.to_sym] }
+    define_singleton_method "aws_#{key}=".to_sym, -> (value) { s3_client_options[key.to_sym] = value }
   end
 
   module Helper
@@ -51,10 +56,7 @@ module S3ReproxyDownload
     private
 
     def client
-      @client ||= Aws::S3::Client.new(
-        access_key_id:     S3ReproxyDownload.aws_access_key_id,
-        secret_access_key: S3ReproxyDownload.aws_secret_access_key
-      )
+      @client ||= Aws::S3::Client.new(S3ReproxyDownload.s3_client_options)
     end
   end
 end
