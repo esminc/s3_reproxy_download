@@ -1,6 +1,6 @@
 # S3ReproxyDownload
 
-Provide helper method that S3 file downloade use X-REPROXY-URL
+Provide helper method that S3 file download use X-REPROXY-URL
 
 ## Installation
 
